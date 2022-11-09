@@ -3,9 +3,11 @@ package main
 import (
 	"fmt"
 
-	"github.com/cqroot/garden/common"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
+
+	"github.com/cqroot/garden/common"
+	"github.com/cqroot/garden/object-server/controllers"
 )
 
 func setDefaultConfig() {
@@ -22,34 +24,9 @@ func main() {
 
 	v1Group := r.Group("/v1")
 	{
-		v1Group.HEAD("/:account/:bucket/:object", func(c *gin.Context) {
-			c.JSON(200, gin.H{
-				"account": c.Param("account"),
-				"bucket":  c.Param("bucket"),
-				"object":  c.Param("object"),
-			})
-		})
-		v1Group.PUT("/:account/:bucket/:object", func(c *gin.Context) {
-			c.JSON(200, gin.H{
-				"account": c.Param("account"),
-				"bucket":  c.Param("bucket"),
-				"object":  c.Param("object"),
-			})
-		})
-		v1Group.GET("/:account/:bucket/:object", func(c *gin.Context) {
-			c.JSON(200, gin.H{
-				"account": c.Param("account"),
-				"bucket":  c.Param("bucket"),
-				"object":  c.Param("object"),
-			})
-		})
-		v1Group.DELETE("/:account/:bucket/:object", func(c *gin.Context) {
-			c.JSON(200, gin.H{
-				"account": c.Param("account"),
-				"bucket":  c.Param("bucket"),
-				"object":  c.Param("object"),
-			})
-		})
+		v1Group.PUT("/:account/:bucket/:object", controllers.PutObject)
+		v1Group.GET("/:account/:bucket/:object", controllers.GetObject)
+		v1Group.DELETE("/:account/:bucket/:object", controllers.DeleteObject)
 	}
 
 	r.Run(fmt.Sprintf("%s:%s", viper.GetString("bind_ip"), viper.GetString("bind_port")))
