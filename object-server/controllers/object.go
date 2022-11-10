@@ -12,7 +12,7 @@ import (
 )
 
 func PutObject(c *gin.Context) {
-	storagePath := common.GetLocalPath(
+	storagePath := common.GetObjectPath(
 		c.Param("account"),
 		c.Param("bucket"),
 		c.Param("object"),
@@ -45,7 +45,7 @@ func PutObject(c *gin.Context) {
 }
 
 func GetObject(c *gin.Context) {
-	storagePath := common.GetLocalPath(
+	storagePath := common.GetObjectPath(
 		c.Param("account"),
 		c.Param("bucket"),
 		c.Param("object"),
@@ -55,7 +55,7 @@ func GetObject(c *gin.Context) {
 }
 
 func DeleteObject(c *gin.Context) {
-	storagePath := common.GetLocalPath(
+	storagePath := common.GetObjectPath(
 		c.Param("account"),
 		c.Param("bucket"),
 		c.Param("object"),
