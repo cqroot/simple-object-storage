@@ -3,7 +3,7 @@ package common_test
 import (
 	"testing"
 
-	"github.com/cqroot/simple-object-storage/common"
+	"github.com/cqroot/simple-object-storage/internal/common"
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
 )

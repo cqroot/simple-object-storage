@@ -1,3 +1,11 @@
+.PHONY: run-bucket-server
+run-bucket-server:
+	go run cmd/bucket-server/main.go
+
+.PHONY: run-object-server
+run-object-server:
+	go run cmd/object-server/main.go
+
 .PHONY: test
 test:
 	go test -v ./...

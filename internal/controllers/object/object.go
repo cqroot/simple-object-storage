@@ -1,4 +1,4 @@
-package controllers
+package object
 
 import (
 	"io"
@@ -8,7 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/cqroot/simple-object-storage/common"
+	"github.com/cqroot/simple-object-storage/internal/common"
 )
 
 func PutObject(c *gin.Context) {

@@ -1,4 +1,4 @@
-package controllers
+package bucket
 
 import (
 	"fmt"
@@ -6,8 +6,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/cqroot/simple-object-storage/common"
-	"github.com/cqroot/simple-object-storage/models"
+	"github.com/cqroot/simple-object-storage/internal/common"
+	"github.com/cqroot/simple-object-storage/internal/models"
 )
 
 func ListObjects(c *gin.Context) {
