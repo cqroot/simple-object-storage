@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 )
 
-var storageRoot string = "/tmp/garden"
+var storageRoot string = "/tmp/simple-object-storage"
 
 func GetBucketPath(account string, bucket string) string {
 	return filepath.Join(storageRoot, account, fmt.Sprintf("%s.db", bucket))

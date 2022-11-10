@@ -1,10 +1,3 @@
-# GARDEN
+# Simple Object Storage
 
-A distributed object store for learning only.
-
-## TODO
-
-- [ ] gateway-server
-- [ ] account-server
-- [ ] bucket-server
-- [ ] object-server
+一个简单的对象存储实现。

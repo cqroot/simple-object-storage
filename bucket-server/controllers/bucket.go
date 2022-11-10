@@ -6,8 +6,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/cqroot/garden/common"
-	"github.com/cqroot/garden/models"
+	"github.com/cqroot/simple-object-storage/common"
+	"github.com/cqroot/simple-object-storage/models"
 )
 
 func ListObjects(c *gin.Context) {

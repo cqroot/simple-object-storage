@@ -8,7 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/cqroot/garden/common"
+	"github.com/cqroot/simple-object-storage/common"
 )
 
 func PutObject(c *gin.Context) {

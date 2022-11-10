@@ -7,12 +7,12 @@ import (
 func InitConfig(serverName string) {
 	viper.SetDefault("log_level", "info")
 
-	viper.SetConfigName(serverName)
-	viper.SetConfigType("toml")
-	viper.AddConfigPath("/etc/garden/")
+	// viper.SetConfigName(serverName)
+	// viper.SetConfigType("toml")
+	// viper.AddConfigPath("/etc/simple-object-storage/")
 
-	err := viper.ReadInConfig()
-	if err != nil {
-		panic(err)
-	}
+	// err := viper.ReadInConfig()
+	// if err != nil {
+	//     panic(err)
+	// }
 }

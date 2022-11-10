@@ -6,8 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 
-	"github.com/cqroot/garden/bucket-server/controllers"
-	"github.com/cqroot/garden/common"
+	"github.com/cqroot/simple-object-storage/bucket-server/controllers"
+	"github.com/cqroot/simple-object-storage/common"
 )
 
 func setDefaultConfig() {

@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/cqroot/garden/common"
+	"github.com/cqroot/simple-object-storage/common"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 )
