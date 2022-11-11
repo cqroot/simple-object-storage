@@ -12,7 +12,7 @@ import (
 
 func setDefaultConfig() {
 	viper.SetDefault("bind_ip", "127.0.0.1")
-	viper.SetDefault("bind_port", "6003")
+	viper.SetDefault("bind_port", "6002")
 }
 
 func main() {
@@ -25,8 +25,8 @@ func main() {
 	v1Group := r.Group("/v1")
 	{
 		v1Group.GET("/:account/:bucket", controllers.ListObjects)
-		v1Group.PUT("/:account/:bucket/:object", controllers.PutObject)
-		v1Group.DELETE("/:account/:bucket/:object", controllers.DeleteObject)
+		v1Group.PUT("/:account/:bucket/*object", controllers.PutObject)
+		v1Group.DELETE("/:account/:bucket/*object", controllers.DeleteObject)
 	}
 
 	r.Run(fmt.Sprintf("%s:%s", viper.GetString("bind_ip"), viper.GetString("bind_port")))

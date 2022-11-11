@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
@@ -23,8 +24,8 @@ func main() {
 
 	v1Group := r.Group("/v1")
 	{
-		v1Group.GET("/foo", func(c *gin.Context) { c.JSON(200, gin.H{"foo": true}) })
-		v1Group.GET("/bar", func(c *gin.Context) { c.JSON(200, gin.H{"bar": true}) })
+		v1Group.GET("/foo", func(c *gin.Context) { c.JSON(http.StatusOK, gin.H{"foo": true}) })
+		v1Group.GET("/bar", func(c *gin.Context) { c.JSON(http.StatusOK, gin.H{"bar": true}) })
 	}
 
 	r.Run(fmt.Sprintf("%s:%s", viper.GetString("bind_ip"), viper.GetString("bind_port")))

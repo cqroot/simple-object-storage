@@ -9,14 +9,15 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/cqroot/simple-object-storage/internal/common"
+	"github.com/cqroot/simple-object-storage/internal/requests"
 )
 
 func PutObject(c *gin.Context) {
-	storagePath := common.GetObjectPath(
-		c.Param("account"),
-		c.Param("bucket"),
-		c.Param("object"),
-	)
+	var account string = c.Param("account")
+	var bucket string = c.Param("bucket")
+	var object string = c.Param("object")[1:]
+
+	storagePath := common.GetObjectPath(account, bucket, object)
 
 	err := os.MkdirAll(filepath.Dir(storagePath), os.ModePerm)
 	if err != nil {
@@ -37,37 +38,39 @@ func PutObject(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{
-		"account": c.Param("account"),
-		"bucket":  c.Param("bucket"),
-		"object":  c.Param("object"),
-	})
+	err = requests.PutObjectToBucket(account, bucket, object)
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+
+	c.AbortWithStatus(http.StatusOK)
 }
 
 func GetObject(c *gin.Context) {
-	storagePath := common.GetObjectPath(
-		c.Param("account"),
-		c.Param("bucket"),
-		c.Param("object"),
-	)
+	var account string = c.Param("account")
+	var bucket string = c.Param("bucket")
+	var object string = c.Param("object")[1:]
+
+	storagePath := common.GetObjectPath(account, bucket, object)
 
 	c.File(storagePath)
 }
 
 func DeleteObject(c *gin.Context) {
-	storagePath := common.GetObjectPath(
-		c.Param("account"),
-		c.Param("bucket"),
-		c.Param("object"),
-	)
+	var account string = c.Param("account")
+	var bucket string = c.Param("bucket")
+	var object string = c.Param("object")[1:]
+
+	storagePath := common.GetObjectPath(account, bucket, object)
 
 	err := os.Remove(storagePath)
 	if err != nil {
 		if os.IsNotExist(err) {
 			c.JSON(http.StatusNotFound, gin.H{
-				"account": c.Param("account"),
-				"bucket":  c.Param("bucket"),
-				"object":  c.Param("object"),
+				"account": account,
+				"bucket":  bucket,
+				"object":  object,
 			})
 			return
 		} else {
@@ -76,9 +79,5 @@ func DeleteObject(c *gin.Context) {
 		}
 	}
 
-	c.JSON(200, gin.H{
-		"account": c.Param("account"),
-		"bucket":  c.Param("bucket"),
-		"object":  c.Param("object"),
-	})
+	c.AbortWithStatus(http.StatusOK)
 }

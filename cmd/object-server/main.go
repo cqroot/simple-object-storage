@@ -24,9 +24,9 @@ func main() {
 
 	v1Group := r.Group("/v1")
 	{
-		v1Group.PUT("/:account/:bucket/:object", controllers.PutObject)
-		v1Group.GET("/:account/:bucket/:object", controllers.GetObject)
-		v1Group.DELETE("/:account/:bucket/:object", controllers.DeleteObject)
+		v1Group.PUT("/:account/:bucket/*object", controllers.PutObject)
+		v1Group.GET("/:account/:bucket/*object", controllers.GetObject)
+		v1Group.DELETE("/:account/:bucket/*object", controllers.DeleteObject)
 	}
 
 	r.Run(fmt.Sprintf("%s:%s", viper.GetString("bind_ip"), viper.GetString("bind_port")))

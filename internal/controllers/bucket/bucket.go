@@ -11,7 +11,10 @@ import (
 )
 
 func ListObjects(c *gin.Context) {
-	objects, err := models.ListObjects(common.GetBucketPath(c.Param("account"), c.Param("bucket")))
+	var account string = c.Param("account")
+	var bucket string = c.Param("bucket")
+
+	objects, err := models.ListObjects(common.GetBucketPath(account, bucket))
 
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
@@ -27,35 +30,41 @@ func ListObjects(c *gin.Context) {
 }
 
 func PutObject(c *gin.Context) {
+	var account string = c.Param("account")
+	var bucket string = c.Param("bucket")
+	var object string = c.Param("object")[1:]
+
 	err := models.PutObject(
-		common.GetBucketPath(c.Param("account"), c.Param("bucket")),
-		c.Param("object"),
+		common.GetBucketPath(account, bucket), object,
 	)
 
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
 	} else {
-		c.JSON(200, gin.H{
-			"account": c.Param("account"),
-			"bucket":  c.Param("bucket"),
-			"object":  c.Param("object"),
+		c.JSON(http.StatusOK, gin.H{
+			"account": account,
+			"bucket":  bucket,
+			"object":  object,
 		})
 	}
 }
 
 func DeleteObject(c *gin.Context) {
+	var account string = c.Param("account")
+	var bucket string = c.Param("bucket")
+	var object string = c.Param("object")[1:]
+
 	err := models.DeleteObject(
-		common.GetBucketPath(c.Param("account"), c.Param("bucket")),
-		c.Param("object"),
+		common.GetBucketPath(account, bucket), object,
 	)
 
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
 	} else {
-		c.JSON(200, gin.H{
-			"account": c.Param("account"),
-			"bucket":  c.Param("bucket"),
-			"object":  c.Param("object"),
+		c.JSON(http.StatusOK, gin.H{
+			"account": account,
+			"bucket":  bucket,
+			"object":  object,
 		})
 	}
 }
