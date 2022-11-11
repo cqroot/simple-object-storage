@@ -2,12 +2,12 @@ package main
 
 import (
 	"fmt"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 
 	"github.com/cqroot/simple-object-storage/internal/common"
+	controllers "github.com/cqroot/simple-object-storage/internal/controllers/gateway"
 )
 
 func setDefaultConfig() {
@@ -24,8 +24,11 @@ func main() {
 
 	v1Group := r.Group("/v1")
 	{
-		v1Group.GET("/foo", func(c *gin.Context) { c.JSON(http.StatusOK, gin.H{"foo": true}) })
-		v1Group.GET("/bar", func(c *gin.Context) { c.JSON(http.StatusOK, gin.H{"bar": true}) })
+		v1Group.GET("/:account/:bucket", controllers.GetBucket)
+
+		v1Group.GET("/:account/:bucket/*object", controllers.GetObject)
+		v1Group.PUT("/:account/:bucket/*object", controllers.PutObject)
+		v1Group.DELETE("/:account/:bucket/*object", controllers.DeleteObject)
 	}
 
 	r.Run(fmt.Sprintf("%s:%s", viper.GetString("bind_ip"), viper.GetString("bind_port")))

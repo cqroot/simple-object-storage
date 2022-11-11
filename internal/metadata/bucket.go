@@ -5,14 +5,15 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/cqroot/simple-object-storage/internal/config"
 )
 
-func GetBucketServerAddress(account string, bucket string) string {
-	return fmt.Sprintf("http://127.0.0.1:6002/v1/%s/%s", account, bucket)
-}
-
 func PutObjectToBucket(account string, bucket string, object string) error {
-	bucketAddress := GetBucketServerAddress(account, bucket)
+	bucketAddress, err := config.GetBucketServerAddress(account, bucket)
+	if err != nil {
+		return err
+	}
 	targetUrl := fmt.Sprintf("%s/%s", bucketAddress, object)
 
 	req, err := http.NewRequest("PUT", targetUrl, nil)
@@ -38,7 +39,10 @@ func PutObjectToBucket(account string, bucket string, object string) error {
 }
 
 func DeleteObjectFromBucket(account string, bucket string, object string) error {
-	bucketAddress := GetBucketServerAddress(account, bucket)
+	bucketAddress, err := config.GetBucketServerAddress(account, bucket)
+	if err != nil {
+		return err
+	}
 	targetUrl := fmt.Sprintf("%s/%s", bucketAddress, object)
 
 	req, err := http.NewRequest("DELETE", targetUrl, nil)
