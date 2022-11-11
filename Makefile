@@ -24,3 +24,8 @@ test-object-get:
 test-object-delete:
 	curl -i -XDELETE http://127.0.0.1:6003/v1/account/bucket/object
 	@echo
+
+.PHONY: test-object-list
+test-object-list:
+	curl -i -XGET http://127.0.0.1:6002/v1/account/bucket
+	@echo

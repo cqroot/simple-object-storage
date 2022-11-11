@@ -1,4 +1,4 @@
-package requests
+package metadata
 
 import (
 	"errors"
@@ -16,6 +16,32 @@ func PutObjectToBucket(account string, bucket string, object string) error {
 	targetUrl := fmt.Sprintf("%s/%s", bucketAddress, object)
 
 	req, err := http.NewRequest("PUT", targetUrl, nil)
+	if err != nil {
+		return err
+	}
+
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return err
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+
+		return errors.New(string(body))
+	}
+
+	return nil
+}
+
+func DeleteObjectFromBucket(account string, bucket string, object string) error {
+	bucketAddress := GetBucketServerAddress(account, bucket)
+	targetUrl := fmt.Sprintf("%s/%s", bucketAddress, object)
+
+	req, err := http.NewRequest("DELETE", targetUrl, nil)
 	if err != nil {
 		return err
 	}

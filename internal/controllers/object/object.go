@@ -9,8 +9,18 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/cqroot/simple-object-storage/internal/common"
-	"github.com/cqroot/simple-object-storage/internal/requests"
+	"github.com/cqroot/simple-object-storage/internal/metadata"
 )
+
+func GetObject(c *gin.Context) {
+	var account string = c.Param("account")
+	var bucket string = c.Param("bucket")
+	var object string = c.Param("object")[1:]
+
+	storagePath := common.GetObjectPath(account, bucket, object)
+
+	c.File(storagePath)
+}
 
 func PutObject(c *gin.Context) {
 	var account string = c.Param("account")
@@ -38,23 +48,13 @@ func PutObject(c *gin.Context) {
 		return
 	}
 
-	err = requests.PutObjectToBucket(account, bucket, object)
+	err = metadata.PutObjectToBucket(account, bucket, object)
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
 
 	c.AbortWithStatus(http.StatusOK)
-}
-
-func GetObject(c *gin.Context) {
-	var account string = c.Param("account")
-	var bucket string = c.Param("bucket")
-	var object string = c.Param("object")[1:]
-
-	storagePath := common.GetObjectPath(account, bucket, object)
-
-	c.File(storagePath)
 }
 
 func DeleteObject(c *gin.Context) {
@@ -77,6 +77,12 @@ func DeleteObject(c *gin.Context) {
 			c.AbortWithError(http.StatusNotFound, err)
 			return
 		}
+	}
+
+	err = metadata.DeleteObjectFromBucket(account, bucket, object)
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return
 	}
 
 	c.AbortWithStatus(http.StatusOK)
