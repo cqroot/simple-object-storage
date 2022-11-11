@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/cqroot/simple-object-storage/internal/common"
+	"github.com/cqroot/simple-object-storage/internal/config"
 	"github.com/cqroot/simple-object-storage/internal/models"
 )
 
@@ -14,7 +14,7 @@ func ListObjects(c *gin.Context) {
 	var account string = c.Param("account")
 	var bucket string = c.Param("bucket")
 
-	objects, err := models.ListObjects(common.GetBucketPath(account, bucket))
+	objects, err := models.ListObjects(config.GetBucketPath(account, bucket))
 
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
@@ -35,7 +35,7 @@ func PutObject(c *gin.Context) {
 	var object string = c.Param("object")[1:]
 
 	err := models.PutObject(
-		common.GetBucketPath(account, bucket), object,
+		config.GetBucketPath(account, bucket), object,
 	)
 
 	if err != nil {
@@ -55,7 +55,7 @@ func DeleteObject(c *gin.Context) {
 	var object string = c.Param("object")[1:]
 
 	err := models.DeleteObject(
-		common.GetBucketPath(account, bucket), object,
+		config.GetBucketPath(account, bucket), object,
 	)
 
 	if err != nil {

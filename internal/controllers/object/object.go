@@ -8,7 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/cqroot/simple-object-storage/internal/common"
+	"github.com/cqroot/simple-object-storage/internal/config"
 	"github.com/cqroot/simple-object-storage/internal/metadata"
 )
 
@@ -17,7 +17,7 @@ func GetObject(c *gin.Context) {
 	var bucket string = c.Param("bucket")
 	var object string = c.Param("object")[1:]
 
-	storagePath := common.GetObjectPath(account, bucket, object)
+	storagePath := config.GetObjectPath(account, bucket, object)
 
 	c.File(storagePath)
 }
@@ -27,7 +27,7 @@ func PutObject(c *gin.Context) {
 	var bucket string = c.Param("bucket")
 	var object string = c.Param("object")[1:]
 
-	storagePath := common.GetObjectPath(account, bucket, object)
+	storagePath := config.GetObjectPath(account, bucket, object)
 
 	err := os.MkdirAll(filepath.Dir(storagePath), os.ModePerm)
 	if err != nil {
@@ -62,7 +62,7 @@ func DeleteObject(c *gin.Context) {
 	var bucket string = c.Param("bucket")
 	var object string = c.Param("object")[1:]
 
-	storagePath := common.GetObjectPath(account, bucket, object)
+	storagePath := config.GetObjectPath(account, bucket, object)
 
 	err := os.Remove(storagePath)
 	if err != nil {
